@@ -1,0 +1,3 @@
+# Default to loading production requirements since this is where 
+# Heroku will look
+-r requirements/production.txt
