@@ -8,13 +8,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/{{ docs_version }}/ref/settings/
 """
 
-# import os
 from os import environ
 from os.path import dirname, join
 import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+BASE_DIR = dirname(dirname(__file__))
 
 
 # Quick-start development settings - unsuitable for production
@@ -22,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # Keep your secret key in an environment variable to help keep it from falling
 # into the wrong hands
-SECRET_KEY = os.environ["SECRET_KEY"]
+SECRET_KEY = environ["SECRET_KEY"]
 
 # Default DEBUG to False for security reasons, ok to override in local
 DEBUG = False
@@ -59,7 +58,7 @@ WSGI_APPLICATION = '{{ project_name }}.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/{{ docs_version }}/ref/settings/#databases
 
-DATABASES = {'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))}
+DATABASES = {'default': dj_database_url.config(default=environ.get('DATABASE_URL'))}
 
 # Internationalization
 # https://docs.djangoproject.com/en/{{ docs_version }}/topics/i18n/
