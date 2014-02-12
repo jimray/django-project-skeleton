@@ -27,15 +27,21 @@ Or, you can set up virtualenv[wrapper] on your local machine.
 ## Setting up a project
 There's a bit of a catch-22 here where you need to install Django before you can set everything else up.
 
-`pip install Django==1.6.2`
+```
+pip install Django==1.6.2
+```
 
 Now, start a new project
 
-`$ django-admin.py startproject --template=https://github.com/jimray/django-skeleton/archive/master.zip --name=Procfile,Procfile.local --extension=py,html,md`
+```
+django-admin.py startproject --template=https://github.com/jimray/django-skeleton/archive/master.zip --name=Procfile,Procfile.local --extension=py,html,md
+```
 
 For local development, install the dependencies defined in the local requirements file.
 
-`pip install -r requirements/local.txt`
+```
+pip install -r requirements/local.txt
+```
 
 For production, use `requirements/production`. Since Heroku looks at `requirements.txt` in the root, it points here.
 
