@@ -79,7 +79,7 @@ class MyModel(TimeStampedModel):
 
     def save(self):
         self.slug = slugify(self.name)
-        super(Story, self).save()
+        super(MyModel, self).save()
 ```
 
 ### Route some urls
