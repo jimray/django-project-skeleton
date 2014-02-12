@@ -31,7 +31,7 @@ There's a bit of a catch-22 here where you need to install Django before you can
 
 Now, start a new project
 
-`$ django-admin.py startproject --template=https://github.com/jimray/django-skeleton/archive/master.zip`
+`$ django-admin.py startproject --template=https://github.com/jimray/django-skeleton/archive/master.zip --name=Procfile,Procfile.local --extension=py,html,md`
 
 For local development, install the dependencies defined in the local requirements file.
 
