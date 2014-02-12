@@ -34,7 +34,7 @@ pip install Django==1.6.2
 Now, start a new project
 
 ```
-django-admin.py startproject --template=https://github.com/jimray/django-project-skeleton/archive/master.zip --name=Procfile,Procfile.local --extension=py,html,md
+django-admin.py startproject --template=https://github.com/jimray/django-project-skeleton/archive/master.zip --name=Procfile,Procfile.local --extension=py,html,md [my_project]
 ```
 
 For local development, install the dependencies defined in the local requirements file.
@@ -44,6 +44,119 @@ pip install -r requirements/local.txt
 ```
 
 For production, use `requirements/production`. Since Heroku looks at `requirements.txt` in the root, it points here.
+
+## Possible next steps
+Some things you might do next:
+
+1. Create an app
+
+```
+django-admin.py startapp [my_app]
+```
+
+2. Build some models
+
+```
+# my_app/models.py
+from django.db import models
+from django.template.defaultfilters import slugify
+from django.core.urlresolvers import reverse
+from model_utils.models import TimeStampedModel
+
+class MyModel(TimeStampedModel):
+    # 'created' and 'modified' come for free with TimeStampedModel
+    name = models.CharField(max_length=128)
+    slug = models.SlugField()
+
+    class Meta:
+        verbose_name_plural = 'MyModels'
+
+    def __unicode__(self):
+        return '%s' % (self.name)
+
+    def get_absolute_url(self):
+        return '/%s/' % (self.slug)
+
+    def save(self):
+        self.slug = slugify(self.name)
+        super(Story, self).save()
+```
+
+3. Route some urls
+
+```
+# my_project/urls
+from django.conf.urls import patterns, include, url
+
+from django.contrib import admin
+admin.autodiscover()
+
+urlpatterns = patterns('',
+    url(r'^', include('[my_app].urls')),
+    url(r'^admin/', include(admin.site.urls)),
+)
+
+# my_app/urls
+from django.conf.urls import patterns, url
+from .views import HomePageView, MyViewDetailView
+urlpatterns = patterns('',
+    url(
+        regex = r'^$',
+        view = HomePageView.as_view(),
+        name = 'homepage'
+    ),
+    url(
+        regex = r'^(?P<slug>[-\w]+)/$',
+        view = MyViewDetailView.as_view(),
+        name = 'issue_detail'
+    ),
+)
+```
+
+4. Make some views
+
+```
+# my_app/views
+from django.shortcuts import render
+from django.views.generic import ListView, DetailView
+from .models import MyModel
+
+
+class HomePageView(ListView):
+    model = MyModel
+    context_object_name = 'things'
+    template_name = 'my_app/homepage.djhtml'
+
+
+class IssueDetailView(DetailView):
+    model = MyModel
+    template_name = 'my_app/detail.djhtml'
+```
+
+
+
+5. Sync to the database for the first time
+
+```
+foreman run newproject/manage.py syncdb
+```
+
+Assuming you have the admin enabled, this will also ask you for a superuser.
+
+```
+foreman run newproject/manage.py schemamigration [my_app] --initial
+```
+
+```
+foreman run newproject/manage.py migrate [my_app]
+```
+
+6. Start the app with Foreman
+
+```
+foreman start -f Procfile.local
+```
+
 
 ## Acknowledgements
 This skeleton borrows liberally from the [Two Scoops project template](https://github.com/twoscoops/django-twoscoops-project). Again, I highly recommend [Two Scoops of Django](http://twoscoopspress.com/products/two-scoops-of-django-1-6) for more on Django best practices.
