@@ -54,6 +54,12 @@ Some things you might do next:
 django-admin.py startapp [my_app]
 ```
 
+or
+
+```
+django-admin.py startapp --template=https://github.com/jimray/django-app-skeleton/archive/master.zip [myapp]
+```
+
 ### Build some models
 
 ```
