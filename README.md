@@ -25,7 +25,7 @@ Once you ssh into the vagrant virtual machine, a virtualenv will already be conf
 Or, you can set up virtualenv[wrapper] on your local machine.
 
 ## Setting up a project
-There's a bit of a catch-22 here where you need to install Django before you can set everything else up.
+There's a bit of a catch-22 here where you need to install Django before you can set everything else up. A bit later we'll use a requirements.txt file to install dependencies.
 
 ```
 pip install Django==1.6.2
@@ -34,7 +34,7 @@ pip install Django==1.6.2
 Now, start a new project
 
 ```
-django-admin.py startproject --template=https://github.com/jimray/django-project-skeleton/archive/master.zip --name=Procfile,Procfile.local --extension=py,html,md [my_project]
+django-admin.py startproject --template=https://github.com/jimray/django-project-skeleton/archive/master.zip --name=Procfile,Procfile.local,.env --extension=py,html,md [my_project]
 ```
 
 For local development, install the dependencies defined in the local requirements file.
@@ -131,12 +131,12 @@ from .models import MyModel
 class HomePageView(ListView):
     model = MyModel
     context_object_name = 'things'
-    template_name = 'my_app/homepage.djhtml'
+    template_name = 'my_app/homepage.html'
 
 
-class IssueDetailView(DetailView):
+class DetailView(DetailView):
     model = MyModel
-    template_name = 'my_app/detail.djhtml'
+    template_name = 'my_app/detail.html'
 ```
 
 
