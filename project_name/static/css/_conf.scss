@@ -1,0 +1,57 @@
+// ---------------------------------------------------------------------
+//  Defaults
+// ---------------------------------------------------------------------
+
+// -----------
+// COLORS
+// -----------
+$intrinsic_gray: rgb(22,22,29);         //eigengrau!
+$intrinsic_grey: $intrinsic_gray;
+
+$hed_color: $intrinsic_gray;            // default color for headlines
+$copy_color: $intrinsic_gray;           // default color for body copy
+$select_color: #ffcc89;                 // cursor highlight color
+
+$link_color: #0000FF;
+$link_color_visited: #800080;
+$link_color_hover: #FF0000;
+$link_color_active: #FF0000;
+
+// ----------
+// Typography
+// ----------
+$helvetica: "Helvetica Neue", Helvetica, Arial, sans-serif;
+$hed_font: $helvetica;
+$copy_font: Georgia, "Times New Roman", Times, serif;
+
+// border-box sizing causes divs to use a table-style box model, where
+// the padding and borders are accounted for in the width of an element,
+// which makes flexible layouts much easier especially when combined with
+// the CSS calc function
+// https://developer.mozilla.org/en-US/docs/CSS/box-sizing
+//
+// If you prefer the standard box model, set to: content-box
+$box_sizing: border-box;
+
+// ---------------------------------------------------------------------
+// modular media query breakpoints
+// Mobile-first media query breakpoints. We've chosen colloquial names
+// for these but are using em-based measurements for more content aware
+// design. For more, see Lyza Gardner:
+// http://blog.cloudfour.com/the-ems-have-it-proportional-media-queries-ftw/
+//
+// See the modular media queries section in _mixins.scss for more on
+// how these work
+//
+// You are by no means required to use every breakpoint, in fact, we'd
+// discourage that, we've provided a reasonable starting point.
+// ---------------------------------------------------------------------
+$mobile_wide: "min-width: 32em";     // 512px
+$tablet: "min-width: 48em";          // 768px
+$desktop: "min-width: 60em";         // 960px
+$tablet_wide: "min-width: 64em";     // 1024px
+$desktop_wide: "min-width: 75em";    // 1200px
+
+// keep a list of all breakpoints for advanced features
+// the first is for non-mq devices
+$breakpoints: ($mobile_wide, $tablet, $desktop), ( $tablet_wide, $desktop_wide );

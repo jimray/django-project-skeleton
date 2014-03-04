@@ -1,0 +1,120 @@
+// Modular media queries
+// Used for creating modular CSS to group media queries with
+// CSS elements instead of grouping elements under media queries.
+// For more on grouping media queries modularly, see Snook:
+// https://smacss.com/book/state#media
+//
+// A set of somewhat opinionated default breakpoints is set in
+// _conf.scss
+//
+// Additionally, by setting $mq_support: false; in your stylesheet,
+// the function will not generate media queries and will only output the
+// styles, creating a page for the widest breakpoint. This is handy for
+// generating IE-specific sytlesheets, for instance
+//
+// @mixin   mq
+// @param   $breakpoint     breakpoint to wrap the CSS
+//
+// @usage
+// /* breakpoint definitions, set in _conf.scss */
+// $tablet: "only screen and ( min-width: 40em )";
+// $desktop: "only screen and ( min-width: 65em )";
+//
+// /* CSS for a specific page module */
+// #module{
+//     /* mobile-first style*
+//     width: 100%
+//
+//     @include mq($tablet){
+//          width: 50%;
+//          float: left;
+//     }
+//     @include mq($desktop){
+//          width: 33%;
+//     }
+// }
+//
+
+// by default, assume media query support
+// set this to false in alternate stylesheets meant for devices without
+// media query support
+$mq_support: true !default;
+
+@mixin mq($breakpoint){
+    // best case, just write out the styles with the $breakpoint
+    @if($mq_support){
+        @media only screen and (#{$breakpoint}) {
+            @content;
+        }
+    }
+    // otherwise, we need to account for devices that don't support mq's
+    @else {
+        // if the breakpoint lists contains a sublist for non-mq devices
+        // loop through that and only write out the styles that match
+        @if length(nth($breakpoints, 1)) != 1 {
+            $do_breakpoint: false;
+            @each $bp in nth($breakpoints, 1) {
+                @if $bp == $breakpoint{
+                    $do_breakpoint: true;
+                }
+            }
+            @if $do_breakpoint == true{
+                @content;
+            }
+        }
+        // otherwise, just write out every breakpoint without the media queries
+        @else{
+            @content;
+        }
+    }
+}
+
+
+// CSS calc function with browser-specific syntaxes and a fallback for
+// browsers with no calc function
+//
+// @mixin   calc
+// @param   $property       CSS property to calculate, e.g. width
+// @param   $expression     CSS-compatible calc function, e.g. "100% - 100px"
+// @param   $fallback       value to use for browsers that don't calc, e.g. 100px
+// @usage   @include calc(width, "100% - 160px", 40px);
+
+@mixin calc($property, $expression, $fallback){
+    #{$property}: #{$fallback};
+    #{$property}: -webkit-calc(#{$expression});
+    #{$property}: -moz-calc(#{$expression});
+    #{$property}: calc(#{$expression});
+}
+
+// Handle rems with grace
+// Converts pixel values to rems, leaves the pixels in place for devices that
+// don't support rem
+//
+// @mixin   rem
+// @param   $property       CSS property to convert, e.g. width
+// @param   $values_px      pixel value to convert, can be single (10px) or a list (10px 12px)
+
+// assume a 16px baseline. If using the 62.5% trick, reset to 10px
+$baseline_px: 16px !default;
+
+@mixin rem($property, $values_px){
+    // fallback
+    #{$property}: #{$values_px};
+
+    // get the baseline as rem for later maths
+    $baseline_rem: $baseline_px / 1rem;
+
+    // loop through the pixel values and create a list of rem values
+    $values_rem: ();
+    @each $val_px in $values_px{
+        @if $val_px == 'auto' {
+            $values_rem: append($values_rem, 'auto');
+        }
+        @else{
+            $values_rem: append($values_rem, ( $val_px / $baseline_rem ));
+        }
+    }
+
+    // write out the rem conversion
+    #{$property}: $values_rem;
+}

@@ -1,0 +1,69 @@
+@import "conf";
+@import "_mixins.scss";
+
+// set up the media query listener
+// each breakpoint assigns a differnt width to #mq
+// when it transitions to that new width, it calls a JS listener
+// so you can write JS specific to each breakpoint
+#mq{
+    // first, set up a very fast transition. This is what JS will listen for
+    -webkit-transition: width 0.01ms;       // unprefixed since iOS and Safari v7, Chrome 26; still required for Android/Blackberry
+    -moz-transition: width 0.01ms;          // unprefixed since FF 16
+    -o-transition: width 0.01ms;            // unprefixed since 12.10
+    transition: width 0.01ms;
+    // make sure it has a width to transition from
+    width: 0;
+
+    // give it a mobile-first default value
+    &:before{
+        content: "min-width: 20em";
+    }
+    // loop through all the breakpoints and assign that breakpoint as the
+    // `content` value; `content` will be heard by the listener
+    // also make sure each breakpoint has a unique width so it actually
+    // transitions and calls the listener
+    $i: 1;
+    // if the list is actually two lists
+    @if length(nth($breakpoints, 1)) != 1 {
+        @each $breakpoint_list in $breakpoints {
+            @each $breakpoint in $breakpoint_list{
+                @media only screen and (#{$breakpoint}) {
+                    width: $i + px;
+                    &:before{
+                        content: "#{$breakpoint}";
+                    }
+                }
+                $i: $i + 1;
+            }
+        }
+    }
+    // otherwise, it's just a list
+    // this should probably be recursive, but SASS's syntax and
+    // list treatment hurts my head
+    @else{
+        @each $breakpoint in $breakpoints {
+             @media only screen and (#{$breakpoint}) {
+                width: $i + px;
+                &:before{
+                    content: "#{$breakpoint}";
+                }
+            }
+            $i: $i + 1;
+        }
+    }
+}
+
+// set the box sizing as defined in conf. Defaults to border-box,
+// which makes flexible layouts much easier.
+* { -moz-box-sizing: $box_sizing; -webkit-box-sizing: $box_sizing; box-sizing: $box_sizing; }
+
+a.btn{
+    border: 1px solid #BBB;
+    border-radius: 4px;
+    display: inline-block;
+    line-height: 1em;
+    @include rem(padding, 4px 8px);
+    text-decoration: none;
+}
+
+
