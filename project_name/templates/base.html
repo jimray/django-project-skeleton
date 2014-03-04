@@ -1,0 +1,93 @@
+{% load static from staticfiles %}
+<!DOCTYPE html>
+<!--[if lte IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        {% block header %}
+            <title>{% block title %}Default{% endblock %}</title>
+        {% endblock header %}
+
+        <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+        <link rel="stylesheet" href="{% static 'css/h5bp-defaults.css' %}">
+        <link rel="stylesheet" href="{% static 'css/shared.css' %}">
+
+        <!--[if lt IE 9]>
+            <link rel="stylesheet" href="{% static 'css/shared-nomq.css' %}">
+        <![endif]-->
+
+        <script src="{% static 'js/vendor/modernizr-2.6.2.min.js' %}"></script>
+</head>
+
+<body>
+    {% block body %}
+
+    {% endblock body %}
+
+    {% block scripts %}
+    <script src="//code.jquery.com/jquery.min.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    {% endblock scripts%}
+
+    <script>
+        // set up the media query listener
+        var mq = document.createElement('div');
+        mq.id = 'mq';
+        // hide it!
+        mq.style.position = 'absolute';
+        mq.style.left = '-31415px';
+        document.body.appendChild(mq);
+
+        // This function executes when the browser hits a breakpoint
+        // We immediately set a var that is a media feature representing
+        // the breakpoint, e.g. 'min-wide: 32em'
+        // Every breakpoint set in _conf.scss is registered
+        // For simplicity, it doesn't attempt to discover match/unmatch
+        // just tells you the current breakpoint.
+        // This is not an attempt to replicate media queries via JS
+        // just allow for JS to know the current breakpoint
+        function mqChange() {
+            var breakpoint = window.getComputedStyle(document.getElementById('mq'),':before').getPropertyValue('content');
+            breakpoint = breakpoint.replace(/'/g, '');      // get rid of the quotes that get added by SASS config
+
+            // needs a breakpoint_num that just gets the number to do numeric comparisons
+            var breakpoint_nums = breakpoint.match(/\d/g);
+            var breakpoint_num = Number(breakpoint_nums.join(""));
+
+            // ---------- ADD YOUR CUSTOM JS HERE ----------
+            // console.log(breakpoint);    // a string like 'min-width: 32em'
+            // if(breakpoint === 'min-width: 32em'){
+            //     console.log('mobile wide');
+            // }
+            //
+            // or use a number
+            // console.log(breakpoint_num); // a number like 32
+            // if( breakpoint_num >= 32){
+            //    console.log('mobile wide or wider');
+            // }
+        }
+
+        // Cross-browser CSS transition listener
+        // This fires when #mq resizes, thus calling the mqChange function
+        mq.addEventListener('webkitTransitionEnd', mqChange, false);    // as of iOS 7 this doesn't need a prefix
+        mq.addEventListener('transitionend', mqChange, false);      // IE only supports transitionend in 10+
+
+        // call the function once to init any breakpoint JS on load
+        mqChange();
+    </script>
+
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+    <script>
+        (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+        function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+        e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+        e.src='//www.google-analytics.com/analytics.js';
+        r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+        ga('create','UA-XXXXX-X');ga('send','pageview');
+    </script>
+    </body>
+</html>
