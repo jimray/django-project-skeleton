@@ -34,7 +34,7 @@ pip install Django==1.6.2
 Now, start a new project
 
 ```
-django-admin.py startproject --template=https://github.com/jimray/django-project-skeleton/archive/master.zip --name=Procfile,Procfile.local,.env --extension=py,html,md [my_project]
+django-admin.py startproject --template=https://codeload.github.com/jimray/django-project-skeleton/zip/master --name=Procfile,Procfile.local,.env [my_project]
 ```
 
 For local development, install the dependencies defined in the local requirements file.
@@ -57,7 +57,7 @@ django-admin.py startapp [my_app]
 or
 
 ```
-django-admin.py startapp --template=https://github.com/jimray/django-app-skeleton/archive/master.zip [myapp]
+django-admin.py startapp --template=https://codeload.github.com/jimray/django-app-skeleton/archive/master.zip [myapp]
 ```
 
 ### Build some models
