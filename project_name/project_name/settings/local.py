@@ -14,13 +14,6 @@ MIDDLEWARE_CLASSES += (
 )
 
 
-# Static files (CSS, JavaScript, Images)
-# Great for local development, not terribly well suited for production
-# https://docs.djangoproject.com/en/{{ docs_version }}/howto/static-files/
-STATIC_URL = '/static/'
-STATICFILES_DIRS = (
-    join(BASE_DIR, 'static'),
-)
 
 
 # DEBUG TOOLBAR CONFIGURATION

@@ -81,3 +81,13 @@ USE_TZ = True
 TEMPLATE_DIRS = (
     join(BASE_DIR, 'templates'),
 )
+
+# Static files (CSS, JavaScript, Images)
+# Great for local development, not terribly well suited for production
+# https://docs.djangoproject.com/en/{{ docs_version }}/howto/static-files/
+STATIC_ROOT = '{{ project_name }}/collectedstatic'
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    join(BASE_DIR, 'static'),
+)
