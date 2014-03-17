@@ -27,8 +27,10 @@ SECRET_KEY = environ["SECRET_KEY"]
 
 # Default DEBUG to False for security reasons, ok to override in local
 DEBUG = False
+if os.environ['DEBUG'] == 'True':
+    DEBUG = True
 
-TEMPLATE_DEBUG = False
+TEMPLATE_DEBUG = DEBUG
 
 
 # Application definition
