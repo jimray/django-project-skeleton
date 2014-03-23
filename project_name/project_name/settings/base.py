@@ -27,6 +27,7 @@ SECRET_KEY = environ["SECRET_KEY"]
 
 # Default DEBUG to False for security reasons, ok to override in local
 DEBUG = False
+# For quick debugging in production USE WITH CAUTION
 if environ['DEBUG'] == 'True':
     DEBUG = True
 
@@ -34,7 +35,6 @@ TEMPLATE_DEBUG = DEBUG
 
 
 # Application definition
-
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
@@ -61,12 +61,10 @@ WSGI_APPLICATION = '{{ project_name }}.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/{{ docs_version }}/ref/settings/#databases
-
 DATABASES = {'default': dj_database_url.config(default=environ.get('DATABASE_URL'))}
 
 # Internationalization
 # https://docs.djangoproject.com/en/{{ docs_version }}/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'

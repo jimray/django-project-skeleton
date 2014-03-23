@@ -163,6 +163,10 @@ foreman run newproject/manage.py migrate [my_app]
 foreman start -f Procfile.local
 ```
 
+### TODO
+* Setting up Heroku (probably a bash script?)
+* Add Node + gulp/brunch with tasks to compile SASS, etc
+
 
 ## Acknowledgements
 This skeleton borrows liberally from the [Two Scoops project template](https://github.com/twoscoops/django-twoscoops-project). Again, I highly recommend [Two Scoops of Django](http://twoscoopspress.com/products/two-scoops-of-django-1-6) for more on Django best practices.
